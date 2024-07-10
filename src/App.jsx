@@ -1,30 +1,23 @@
 
 import './App.css'
-import { RecoilRoot,useRecoilValue} from 'recoil'
-import { notifications,totalNotificationSelector } from './atom.js'
-
+import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
+import { todosAtomFamily } from './atom.js';
 
 function App() {
   return <RecoilRoot>
-    <MainApp />
+    <Todo id={1}/>
+    <Todo id={2} />
   </RecoilRoot>
 }
 
-function MainApp() {
-  const networkCount= useRecoilValue(notifications)
-  const totalNotificationCount = useRecoilValue(totalNotificationSelector);
-
+function Todo({id}) {
+   const todo = useRecoilValue(todosAtomFamily(id));
 
   return (
     <>
-      <button>Home</button>
-      
-      <button>My network ({networkCount.networks >= 100 ? "99+" : networkCount.networks})</button>
-      <button>Jobs {networkCount.jobs}</button>
-      <button>Messaging ({networkCount.messaging})</button>
-      <button>Notifications ({networkCount.notifications})</button>
-
-      <button>Me ({totalNotificationCount})</button>
+      {todo.title}
+      {todo.description}
+      <br />
     </>
   )
 }
